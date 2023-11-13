@@ -12,7 +12,7 @@ public class WeekdayPromotionHandler extends PromotionHandler {
     @Override
     protected void process(Order order) {
         DecemberDate decemberDate = order.getDecemberDate();
-        if (decemberDate.isWeekend()) {
+        if (decemberDate.isWeekday()) {
             OrderItems orderItems = order.getOrderItems();
             int totalCount = orderItems.getTotalCountForCategory(MenuCategory.DESSERT);
 
