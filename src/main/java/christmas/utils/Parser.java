@@ -10,6 +10,9 @@ public class Parser {
     private static final String ORDER_ITEM_DELIMITER = "-";
     private static final int SPLITTED_ORDER_ITEM_SIZE = 2;
 
+    private Parser() {
+    }
+
     public static int parseDate(String userInput) {
         return tryParseIntAsOptional(userInput).orElseThrow(() ->
                 new IllegalArgumentException(ErrorMessage.INVALID_DATE.getMessage()));

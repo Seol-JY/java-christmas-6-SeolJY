@@ -8,6 +8,7 @@ import christmas.domain.handler.PromotionHandler;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Order {
     private final DecemberDate decemberDate;
@@ -45,7 +46,7 @@ public class Order {
         if (benefitAmount == 0) {
             return;
         }
-        
+
         benefits.put(promotionHandler, benefitAmount);
         benefitPrice += benefitAmount;
 
@@ -70,8 +71,8 @@ public class Order {
         return originalTotalPrice;
     }
 
-    public Badge getBadge() {
-        return badge;
+    public Optional<Badge> getBadge() {
+        return Optional.ofNullable(badge);
     }
 
     public void setBadge(Badge badge) {

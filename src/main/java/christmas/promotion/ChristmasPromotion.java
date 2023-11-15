@@ -14,14 +14,19 @@ import christmas.domain.handler.WeekendPromotionHandler;
 import christmas.utils.Parser;
 import christmas.utils.RetryExecutor;
 import christmas.view.InputView;
+import christmas.view.OutputView;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class ChristmasPromotion {
     public void run() {
+        OutputView.printEventPlannerMessage();
+
         DecemberDate decemberDate = withRetry(this::processDecemberDate);
         Order order = withRetry(() -> processOrder(decemberDate));
         applyDiscount(order);
+
+        processResult(decemberDate, order);
     }
 
     private DecemberDate processDecemberDate() {
@@ -63,6 +68,17 @@ public class ChristmasPromotion {
                 .setNext(new BadgePromotionHandler());
 
         bonusPromotionHandler.run(order);
+    }
+
+    private static void processResult(DecemberDate decemberDate, Order order) {
+        OutputView.printEventPreviewMessage(decemberDate);
+        OutputView.printOrderMenu(order);
+        OutputView.printInitialToalAmount(order);
+        OutputView.printGiftMenu(order);
+        OutputView.printBenefitDetails(order);
+        OutputView.printTotalBenefitAmount(order);
+        OutputView.printExpectedPaymentAmount(order);
+        OutputView.printEventBedge(order);
     }
 
     private <T> T withRetry(Supplier<T> function) {
