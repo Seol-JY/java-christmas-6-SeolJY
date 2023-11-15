@@ -42,7 +42,10 @@ public class Order {
         if (benefits.containsKey(promotionHandler)) {
             throw new IllegalStateException(ErrorMessage.DUPLICATED_PROMOTION.getMessage());
         }
-
+        if (benefitAmount == 0) {
+            return;
+        }
+        
         benefits.put(promotionHandler, benefitAmount);
         benefitPrice += benefitAmount;
 
