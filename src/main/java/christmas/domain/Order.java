@@ -3,7 +3,10 @@ package christmas.domain;
 import christmas.constants.Badge;
 import christmas.constants.ErrorMessage;
 import christmas.constants.MenuInfo;
+import christmas.domain.handler.BonusPromotionHandler;
 import christmas.domain.handler.PromotionHandler;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
@@ -14,7 +17,8 @@ public class Order {
     private OrderItems bonusItem = OrderItems.create();
 
     private int benefitPrice;
-    private Map<PromotionHandler, Integer> benefits;
+    private int discountAmount;
+    private final Map<PromotionHandler, Integer> benefits = new HashMap<>();
 
     private Badge badge;
 
@@ -41,10 +45,14 @@ public class Order {
 
         benefits.put(promotionHandler, benefitAmount);
         benefitPrice += benefitAmount;
+
+        if (!(promotionHandler instanceof BonusPromotionHandler)) {
+            discountAmount += benefitAmount;
+        }
     }
 
     public int calculateFinalPrice() {
-        return originalTotalPrice - benefitPrice;
+        return originalTotalPrice - discountAmount;
     }
 
     public int getBenefitPrice() {
@@ -73,6 +81,10 @@ public class Order {
 
     public OrderItems getOrderItems() {
         return orderItems;
+    }
+
+    public Map<PromotionHandler, Integer> getBenefits() {
+        return Collections.unmodifiableMap(benefits);
     }
 
     private int calculateOriginalPrice() {
