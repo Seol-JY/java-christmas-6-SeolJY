@@ -32,7 +32,7 @@ public class DecemberDate {
     }
 
     public Optional<Integer> getDaysDifferenceIfEarlier(int otherDate) {
-        if (this.date < otherDate) {
+        if (this.date <= otherDate) {
             return Optional.of(otherDate - this.date);
         } else {
             return Optional.empty();
