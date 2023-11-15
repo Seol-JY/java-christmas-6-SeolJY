@@ -1,5 +1,6 @@
 package christmas.domain.handler;
 
+import christmas.constants.Badge;
 import christmas.domain.Order;
 
 public class BadgePromotionHandler extends PromotionHandler {
@@ -10,16 +11,25 @@ public class BadgePromotionHandler extends PromotionHandler {
 
     @Override
     protected void process(Order order) {
-        order.getBenefitPrice();
+
+        int benefitPrice = order.getBenefitPrice();
+
+        if (benefitPrice >= SANTA_BADGE_THRESHOLD) {
+            order.setBadge(Badge.SANTA);
+            return;
+        }
+        if (benefitPrice >= TREE_BADGE_THRESHOLD) {
+            order.setBadge(Badge.TREE);
+            return;
+        }
+        if (benefitPrice >= STAR_BADGE_THRESHOLD) {
+            order.setBadge(Badge.STAR);
+        }
     }
-//    총혜택 금액에 따라 다른 이벤트 배지를 부여합니다. 이 배지는 2024 새해 이벤트에서 활용할 예정입니다. 배지에 따라 새해 이벤트 참여 시, 각각 다른 새해 선물을 증정할 예정입니다.
-//5천 원 이상: 별
-//1만 원 이상: 트리
-//2만 원 이상: 산타
 
     @Override
     public String toString() {
         return PROMOTION_NAME;
     }
-
 }
+
