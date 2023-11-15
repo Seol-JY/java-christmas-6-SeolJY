@@ -3,7 +3,7 @@ package christmas.domain.handler;
 import christmas.domain.DecemberDate;
 import christmas.domain.Order;
 
-public class CristmasPromotionHandler extends PromotionHandler {
+public class ChristmasPromotionHandler extends PromotionHandler {
     private static final String PROMOTION_NAME = "크리스마스 디데이 할인";
     private static final int CHRISTMAS_DATE = 25;
     private static final int DISCOUNT_WEIGHT = 100;

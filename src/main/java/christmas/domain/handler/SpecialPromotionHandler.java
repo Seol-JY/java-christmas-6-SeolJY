@@ -4,7 +4,7 @@ import christmas.domain.DecemberDate;
 import christmas.domain.Order;
 import java.util.List;
 
-public class SepcialPromotionHandler extends PromotionHandler {
+public class SpecialPromotionHandler extends PromotionHandler {
     private static final String PROMOTION_NAME = "특별 할인";
     private static final int DISCOUNT_AMOUNT = 1_000;
     private static final List<DecemberDate> discountDecemberDates = List.of(
