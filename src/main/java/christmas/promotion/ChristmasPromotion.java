@@ -4,6 +4,13 @@ import christmas.constants.MenuInfo;
 import christmas.domain.DecemberDate;
 import christmas.domain.Order;
 import christmas.domain.OrderItems;
+import christmas.domain.handler.BadgePromotionHandler;
+import christmas.domain.handler.BonusPromotionHandler;
+import christmas.domain.handler.ChristmasPromotionHandler;
+import christmas.domain.handler.PromotionHandler;
+import christmas.domain.handler.SpecialPromotionHandler;
+import christmas.domain.handler.WeekdayPromotionHandler;
+import christmas.domain.handler.WeekendPromotionHandler;
 import christmas.utils.Parser;
 import christmas.utils.RetryExecutor;
 import christmas.view.InputView;
@@ -14,7 +21,7 @@ public class ChristmasPromotion {
     public void run() {
         DecemberDate decemberDate = withRetry(this::processDecemberDate);
         Order order = withRetry(() -> processOrder(decemberDate));
-
+        applyDiscount(order);
     }
 
     private DecemberDate processDecemberDate() {
@@ -43,6 +50,19 @@ public class ChristmasPromotion {
         }
 
         return orderItems;
+    }
+
+    public void applyDiscount(Order order) {
+        PromotionHandler bonusPromotionHandler = new BonusPromotionHandler();
+
+        bonusPromotionHandler
+                .setNext(new WeekendPromotionHandler())
+                .setNext(new WeekdayPromotionHandler())
+                .setNext(new ChristmasPromotionHandler())
+                .setNext(new SpecialPromotionHandler())
+                .setNext(new BadgePromotionHandler());
+
+        bonusPromotionHandler.run(order);
     }
 
     private <T> T withRetry(Supplier<T> function) {
