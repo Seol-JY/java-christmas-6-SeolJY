@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Order 테스트")
 class OrderTest {
     private OrderItems orderItems;
+    private DecemberDate decemberDate = DecemberDate.from(15);
 
     @BeforeEach
     void setUp() {
@@ -27,7 +28,7 @@ class OrderTest {
     @Test
     @DisplayName("[성공] 주문 생성 시 유효한 주문이 생성된다.")
     void testValidOrderCreation() {
-        assertDoesNotThrow(() -> Order.from(orderItems));
+        assertDoesNotThrow(() -> Order.of(decemberDate, orderItems));
     }
 
     @Test
@@ -38,14 +39,14 @@ class OrderTest {
                 .addItem(MenuInfo.ZERO_COLA, 2);
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> Order.from(beverageOrderItems));
+                () -> Order.of(decemberDate, beverageOrderItems));
         assertThat(exception.getMessage()).isEqualTo(ErrorMessage.INVALID_ORDER.getMessage());
     }
 
     @Test
     @DisplayName("[성공] 증정 메뉴가 정상적으로 추가된다.")
     void testAddBonusItem() {
-        Order order = Order.from(orderItems);
+        Order order = Order.of(decemberDate, orderItems);
         MenuInfo bonusItem = MenuInfo.ICE_CREAM;
         int quantity = 2;
 
@@ -58,7 +59,7 @@ class OrderTest {
     @Test
     @DisplayName("[성공] 뱃지가 정상적으로 설정된다.")
     void testSetBadge() {
-        Order order = Order.from(orderItems);
+        Order order = Order.of(decemberDate, orderItems);
         Badge badge = Badge.STAR;
 
         order.setBadge(badge);

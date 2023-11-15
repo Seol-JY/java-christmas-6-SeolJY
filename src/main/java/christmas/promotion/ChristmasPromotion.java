@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public class ChristmasPromotion {
     public void run() {
         DecemberDate decemberDate = withRetry(this::processDecemberDate);
-        Order order = withRetry(this::processOrder);
+        Order order = withRetry(() -> processOrder(decemberDate));
 
     }
 
@@ -23,9 +23,9 @@ public class ChristmasPromotion {
         return DecemberDate.from(date);
     }
 
-    private Order processOrder() {
+    private Order processOrder(DecemberDate decemberDate) {
         OrderItems orderItems = createOrderItems();
-        return Order.from(orderItems);
+        return Order.of(decemberDate, orderItems);
     }
 
     private OrderItems createOrderItems() {

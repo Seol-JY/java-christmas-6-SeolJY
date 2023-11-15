@@ -7,6 +7,7 @@ import christmas.domain.handler.PromotionHandler;
 import java.util.Map;
 
 public class Order {
+    private final DecemberDate decemberDate;
     private final OrderItems orderItems;
     private final int originalTotalPrice;
 
@@ -17,14 +18,16 @@ public class Order {
 
     private Badge badge;
 
-    private Order(OrderItems orderItems) {
+    private Order(DecemberDate decemberDate, OrderItems orderItems) {
         validateOrderConditions(orderItems);
+        this.decemberDate = decemberDate;
         this.orderItems = orderItems;
+
         originalTotalPrice = calculateOriginalPrice();
     }
 
-    public static Order from(OrderItems orderItems) {
-        return new Order(orderItems);
+    public static Order of(DecemberDate decemberDate, OrderItems orderItems) {
+        return new Order(decemberDate, orderItems);
     }
 
     public void addBonusItem(MenuInfo bonusMenuItem, int quantity) {
@@ -44,6 +47,10 @@ public class Order {
         return originalTotalPrice - benefitPrice;
     }
 
+    public DecemberDate getDecemberDate() {
+        return decemberDate;
+    }
+
     public int getOriginalTotalPrice() {
         return originalTotalPrice;
     }
@@ -58,6 +65,10 @@ public class Order {
 
     public OrderItems getBonusItem() {
         return bonusItem;
+    }
+
+    public OrderItems getOrderItems() {
+        return orderItems;
     }
 
     private int calculateOriginalPrice() {
