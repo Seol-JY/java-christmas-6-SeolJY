@@ -47,6 +47,10 @@ public class Order {
         return originalTotalPrice - benefitPrice;
     }
 
+    public int getBenefitPrice() {
+        return benefitPrice;
+    }
+
     public DecemberDate getDecemberDate() {
         return decemberDate;
     }

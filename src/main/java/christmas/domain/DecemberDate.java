@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.constants.ErrorMessage;
+import java.util.Objects;
 import java.util.Optional;
 
 public class DecemberDate {
@@ -30,10 +31,6 @@ public class DecemberDate {
         return !isWeekend(); // 주말이 아니면 평일
     }
 
-    public boolean isSameDate(int otherDate) {
-        return this.date == otherDate;
-    }
-
     public Optional<Integer> getDaysDifferenceIfEarlier(int otherDate) {
         if (this.date < otherDate) {
             return Optional.of(otherDate - this.date);
@@ -46,5 +43,22 @@ public class DecemberDate {
         if (date < MIN_DATE || date > MAX_DATE) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DATE.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DecemberDate that = (DecemberDate) o;
+        return date == that.date;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date);
     }
 }

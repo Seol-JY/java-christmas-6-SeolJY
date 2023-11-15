@@ -46,14 +46,16 @@ class DecemberDateTest {
     @Test
     @DisplayName("[성공] 동일한 날짜인 경우에 true를 반환한다.")
     void testIsSameDateTrue() {
-        assertThat(date.isSameDate(15)).isTrue();
+        DecemberDate decemberDate = DecemberDate.from(15);
+        assertThat(date.equals(decemberDate)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(ints = {10, 25, 30})
     @DisplayName("[성공] 동일하지 않은 날짜인 경우에 false를 반환한다.")
     void testIsSameDateFalse(int otherDate) {
-        assertThat(date.isSameDate(otherDate)).isFalse();
+        DecemberDate decemberDate = DecemberDate.from(otherDate);
+        assertThat(date.equals(decemberDate)).isFalse();
     }
 
     @ParameterizedTest
