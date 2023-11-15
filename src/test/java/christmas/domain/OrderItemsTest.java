@@ -3,6 +3,7 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import christmas.constants.MenuCategory;
 import christmas.constants.MenuInfo;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,4 +88,26 @@ class OrderItemsTest {
 
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("[성공] 특정 카테고리에 속하는 메뉴들의 총 수량이 정확하게 반환된다.")
+    void testGetTotalCountForCategory() {
+        MenuInfo beverageMenu = MenuInfo.ZERO_COLA;
+        MenuInfo beverageMenu2 = MenuInfo.CHAMPAGNE;
+        MenuInfo nonBeverageMenu = MenuInfo.TAPAS;
+
+        orderItems = OrderItems.create()
+                .addItem(beverageMenu, 2)
+                .addItem(beverageMenu2, 4)
+                .addItem(nonBeverageMenu, 10);
+
+        int totalBeverageCount = orderItems.getTotalCountForCategory(MenuCategory.BEVERAGE);
+        System.out.println(totalBeverageCount);
+        int totalNonBeverageCount = orderItems.getTotalCountForCategory(MenuCategory.MAIN);
+
+        // Assert
+        assertThat(totalBeverageCount).isEqualTo(6);
+        assertThat(totalNonBeverageCount).isEqualTo(0);
+    }
 }
+

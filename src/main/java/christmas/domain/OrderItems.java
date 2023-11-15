@@ -6,6 +6,7 @@ import christmas.constants.MenuInfo;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public final class OrderItems {
     private static final int MAX_TOTAL_ITEM_COUNT = 20;
@@ -38,6 +39,13 @@ public final class OrderItems {
         return Collections.unmodifiableMap(items);
     }
 
+    public int getTotalCountForCategory(MenuCategory category) {
+        return items.entrySet().stream()
+                .filter(entry -> category.containsMenu(entry.getKey()))
+                .mapToInt(Entry::getValue)
+                .sum();
+    }
+
     private void validateDuplicate(MenuInfo menu) {
         if (items.containsKey(menu)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage());
@@ -60,3 +68,4 @@ public final class OrderItems {
         return items.values().stream().mapToInt(Integer::intValue).sum();
     }
 }
+
