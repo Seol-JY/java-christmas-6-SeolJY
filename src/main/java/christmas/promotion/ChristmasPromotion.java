@@ -2,6 +2,7 @@ package christmas.promotion;
 
 import christmas.constants.MenuInfo;
 import christmas.domain.DecemberDate;
+import christmas.domain.Order;
 import christmas.domain.OrderItems;
 import christmas.utils.Parser;
 import christmas.utils.RetryExecutor;
@@ -12,7 +13,8 @@ import java.util.function.Supplier;
 public class ChristmasPromotion {
     public void run() {
         DecemberDate decemberDate = withRetry(this::processDecemberDate);
-        OrderItems orderItems = withRetry(this::processOrderItems);
+        Order order = withRetry(this::processOrder);
+
     }
 
     private DecemberDate processDecemberDate() {
@@ -21,7 +23,12 @@ public class ChristmasPromotion {
         return DecemberDate.from(date);
     }
 
-    private OrderItems processOrderItems() {
+    private Order processOrder() {
+        OrderItems orderItems = createOrderItems();
+        return Order.from(orderItems);
+    }
+
+    private OrderItems createOrderItems() {
         String userInput = InputView.readMenuOrder();
         List<String> splitUserInput = Parser.parseOrderItems(userInput);
 

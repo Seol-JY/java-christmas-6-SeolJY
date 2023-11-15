@@ -44,6 +44,10 @@ public class Order {
         return originalTotalPrice - benefitPrice;
     }
 
+    public int getOriginalTotalPrice() {
+        return originalTotalPrice;
+    }
+
     public Badge getBadge() {
         return badge;
     }
