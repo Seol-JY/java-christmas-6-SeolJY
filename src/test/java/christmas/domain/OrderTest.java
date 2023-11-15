@@ -64,6 +64,6 @@ class OrderTest {
 
         order.setBadge(badge);
 
-        assertThat(order.getBadge()).isEqualTo(badge);
+        assertThat(order.getBadge().get()).isEqualTo(badge);
     }
 }

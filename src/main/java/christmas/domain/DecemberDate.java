@@ -28,7 +28,7 @@ public class DecemberDate {
     }
 
     public boolean isWeekday() {
-        return !isWeekend(); // 주말이 아니면 평일
+        return !isWeekend();
     }
 
     public Optional<Integer> getDaysDifferenceIfEarlier(int otherDate) {
